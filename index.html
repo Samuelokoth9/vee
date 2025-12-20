@@ -286,78 +286,130 @@
           <img src="Photo3.jpg" alt="Vee 3" />
           <img src="Photo4.jpg" alt="Vee 4" />
         </div>
-        <div class="jar-card">
-          <h2>Unwrap a Poem for Vee 💌</h2>
-          <p>
-            Click the button and receive a sweet romantic poem just for you!
-          </p>
+      </div>
 
-          <div class="actions">
-            <button id="unwrapPoem">Unwrap Poem 🎁</button>
+      <div class="jar-card">
+        <h2>Weigh Our Love ⚖️❤️</h2>
+        <p>Add your love and see the real weight grow in kilograms!</p>
+
+        <div class="scale-wrap">
+          <div class="scale">
+            <div id="youW" class="weight you" style="height: 40px">0 kg</div>
+            <div id="veeW" class="weight vee" style="height: 80px">15 kg</div>
           </div>
-
-          <!-- Scroll container -->
-          <div
-            id="scroll"
-            style="
-              margin-top: 1rem;
-              padding: 1.5rem;
-              border-radius: 16px;
-              background: url('https://i.imgur.com/OdL0XPt.png') no-repeat
-                center/cover;
-              color: #4a1c2a;
-              font-family: 'Playfair Display', serif;
-              font-style: italic;
-              font-size: 1.2rem;
-              min-height: 120px;
-              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-              text-align: center;
-              white-space: pre-line;
-            "
-          ></div>
+          <div class="labels"><span>Sam</span><span>Vee</span></div>
         </div>
 
-        <script>
-          // Array of short romantic poems
-          const poems = [
-            "Vee, your smile lights up my darkest night,\nYour laughter makes my world so bright.",
-            "Every heartbeat whispers your name,\nLoving you will always be my sweetest game.",
-            "In your eyes, I see my home,\nWith you, I never feel alone.",
-            "Your love is the melody my heart sings,\nThe joy and peace your presence brings.",
-            "Like the stars that shine above,\nYou are my endless light and love.",
-            "A thousand words could never convey,\nHow I adore you more each day.",
-            "With every touch, my heart takes flight,\nYou are my dawn, my love, my light.",
-          ];
-
-          const scroll = document.getElementById("scroll");
-          const unwrapBtn = document.getElementById("unwrapPoem");
-
-          // Helper: spawn floating hearts
-          function spawnHeart() {
-            const h = document.createElement("div");
-            h.className = "heart-rise";
-            h.textContent = "💖";
-            h.style.left = Math.random() * 80 + 10 + "vw";
-            h.style.fontSize = Math.random() * 22 + 14 + "px";
-            document.body.appendChild(h);
-            h.addEventListener("animationend", () => h.remove());
-          }
-
-          // Track last poem to avoid repetition
-          let lastIndex = -1;
-
-          unwrapBtn.onclick = () => {
-            let index;
-            do {
-              index = Math.floor(Math.random() * poems.length);
-            } while (index === lastIndex);
-            lastIndex = index;
-
-            scroll.textContent = poems[index];
-            spawnHeart();
-          };
-        </script>
+        <button id="addLove">Add my love 💖</button>
+        <p id="result"></p>
       </div>
     </div>
+
+    <script>
+      const messages = [
+        "You are my today, my tomorrow, and my forever, Vee.",
+        "Every heartbeat whispers your name, Vee.",
+        "In your smile, I find my home, Vee.",
+        "Loving you is my favorite habit, Vee.",
+        "You turn ordinary days into magic, Vee.",
+      ];
+
+      const msg = document.getElementById("message");
+      document.getElementById("changeBtn").onclick = () => {
+        msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+        spawnHeart();
+      };
+
+      const indila = document.getElementById("indilaSong");
+      const musicBtn = document.getElementById("musicBtn");
+      let playing = false;
+
+      musicBtn.onclick = () => {
+        if (!playing) {
+          indila.play();
+          musicBtn.textContent = "Pause song ⏸️";
+        } else {
+          indila.pause();
+          musicBtn.textContent = "Play song 🎶";
+        }
+        playing = !playing;
+      };
+
+      function spawnHeart() {
+        const h = document.createElement("div");
+        h.className = "heart-rise";
+        h.textContent = "❤️";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.fontSize = Math.random() * 22 + 14 + "px";
+        document.body.appendChild(h);
+        h.addEventListener("animationend", () => h.remove());
+      }
+
+      setInterval(spawnHeart, 1000);
+
+      function firework() {
+        const x = Math.random() * window.innerWidth;
+        const y = 80 + Math.random() * 120;
+
+        for (let i = 0; i < 18; i++) {
+          const s = document.createElement("div");
+          s.className = "spark";
+          s.textContent = "💖";
+          s.style.left = x + "px";
+          s.style.top = y + "px";
+          s.style.setProperty("--x", Math.random() * 200 - 100 + "px");
+          s.style.setProperty("--y", Math.random() * 200 - 100 + "px");
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 900);
+        }
+      }
+
+      setInterval(firework, 7000);
+
+      let you = 0;
+      let vee = 15 + Math.floor(Math.random() * 10);
+      const youW = document.getElementById("youW");
+      const veeW = document.getElementById("veeW");
+      const result = document.getElementById("result");
+
+      function updateW() {
+        youW.textContent = you + " kg";
+        veeW.textContent = vee + " kg";
+        youW.style.height = you * 3 + 40 + "px";
+        veeW.style.height = vee * 3 + 40 + "px";
+      }
+
+      updateW();
+
+      document.getElementById("addLove").onclick = () => {
+        you += Math.floor(Math.random() * 3) + 2;
+        result.textContent =
+          you >= vee
+            ? "Your love outweighs everything! 💘"
+            : "Love is growing… keep adding 💞";
+        updateW();
+        spawnHeart();
+      };
+
+      function cupidLoveExplosion() {
+        const baseX = 70;
+        const baseY = 70;
+        const symbols = ["💖", "❤️", "✨", "💕"];
+
+        for (let i = 0; i < 14; i++) {
+          const l = document.createElement("div");
+          l.className = "love-burst";
+          l.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          l.style.left = baseX + "px";
+          l.style.top = baseY + "px";
+          l.style.setProperty("--x", Math.random() * 140 - 70 + "px");
+          l.style.setProperty("--y", Math.random() * 140 - 70 + "px");
+          document.body.appendChild(l);
+          setTimeout(() => l.remove(), 1200);
+        }
+      }
+
+      setInterval(cupidLoveExplosion, 4000);
+    </script>
   </body>
 </html>
