@@ -249,10 +249,6 @@
   </head>
 
   <body>
-    <audio id="bgMusic" loop>
-      <source src="Song.Mp3" type="audio/mpeg" />
-    </audio>
-
     <!-- Static Cupid Image -->
     <div class="static-cupid">
       <img
@@ -276,6 +272,10 @@
           <button id="changeBtn">Sweet line 💌</button>
           <button id="musicBtn" class="secondary">Play song 🎶</button>
         </div>
+        <!-- Hidden Indila audio -->
+        <audio id="indilaSong">
+          <source src="Song.Mp3" type="audio/mpeg" />
+        </audio>
       </div>
 
       <div class="gallery">
@@ -320,16 +320,16 @@
         spawnHeart();
       };
 
-      const music = document.getElementById("bgMusic");
+      const indila = document.getElementById("indilaSong");
       const musicBtn = document.getElementById("musicBtn");
       let playing = false;
 
       musicBtn.onclick = () => {
         if (!playing) {
-          music.play();
+          indila.play();
           musicBtn.textContent = "Pause song ⏸️";
         } else {
-          music.pause();
+          indila.pause();
           musicBtn.textContent = "Play song 🎶";
         }
         playing = !playing;
