@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Vee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=playfair+Display:wght@500;700&family=poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "poppins", sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: #4a1c2a;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2.5rem 2rem;
+        border-radius: 24px;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 2opx 40px rgba(0, 0, 0, 0.2);
+        position: fadein 1.2s ease;
+      }
+      h1 {
+        font-family: 'playfair display', serif;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+      }
+      h1 span {color: #e6396f;}
+      .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        color: #6b2a3a;
+      }
+      .message {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+      }
+      button {
+        background: linear-gradient(135deg, #ff5f8a, #ff2d6f);
+        border: none;
+        color: #fff;
+        padding: 0.75rem 1.6rem;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 8px 18px rgba(255, 45, 111, 0.4);
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(255, 45, 111, 0.5);
+      }
+      .footer {
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+        opacity: 0.8;
+      } 
+      @keyframes float {
+100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+}
+
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>For <span>Vee</span> ❤️</h1>
+<p class="subtitle">A little corner of the internet made just for you</p>
+
+
+<p id="message" class="message">
+Vee, every time I think of you, my world becomes softer and brighter.
+You are my favorite thought, my sweetest smile, and the calm in my chaos.
+This small page can never hold all I feel, but it carries a piece of my heart — always yours.
+</p>
+
+
+<button id="changeBtn">Tap for another sweet line 💌</button>
+
+
+<div class="footer">Made with love, just for you ✨</div>
+</div>
+
+
+<script>
+const messages = [
+"Vee, you are the reason ordinary days feel magical. I cherish you more than words can say.",
+"If my heart had a home, it would be wherever you are, Vee.",
+"Every heartbeat of mine whispers your name, Vee, again and again.",
+"You are my today, my tomorrow, and my favorite forever, Vee.",
+"In a world full of noise, your love is my sweetest song, Vee."
+];
+
+
+const btn = document.getElementById('changeBtn');
+const msg = document.getElementById('message');
+
+
+btn.addEventListener('click', () => {
+const random = Math.floor(Math.random() * messages.length);
+msg.textContent = messages[random];
+createHeart();
+});
+
+
+function createHeart() {
+const heart = document.createElement('div');
+heart.classList.add('heart');
+heart.textContent = '❤️';
+heart.style.left = Math.random() * 100 + 'vw';
+heart.style.bottom = '-10px';
+heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
+heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+document.body.appendChild(heart);
+
+
+setTimeout(() => heart.remove(), 7000);
+}
+
+
+setInterval(createHeart, 1200);
+</script>
+</body>
+</html>
+    </style>
+  </head>
+  <body></body>
+</html>
