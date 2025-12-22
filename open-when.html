@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open When… 💌</title>
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top, #ffd1dc, #ff9a9e);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #4a1c2a;
+        perspective: 1200px;
+      }
+
+      .container {
+        display: grid;
+        gap: 1.5rem;
+        max-width: 900px;
+        padding: 1rem;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .card {
+        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        border-radius: 22px;
+        padding: 1.4rem;
+        text-align: center;
+        cursor: pointer;
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25),
+          inset 0 2px 6px rgba(255, 255, 255, 0.7);
+      }
+
+      .card:hover {
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35),
+          inset 0 2px 6px rgba(255, 255, 255, 0.8);
+      }
+
+      .card span {
+        font-size: 2.4rem;
+        display: block;
+      }
+
+      .message {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .message-content {
+        background: linear-gradient(135deg, #fff, #fff0f5);
+        border-radius: 26px;
+        padding: 2rem;
+        max-width: 500px;
+        text-align: center;
+        animation: pop 0.5s ease;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      button {
+        margin-top: 1rem;
+        border: none;
+        background: linear-gradient(135deg, #ff5f8a, #ff2d6f);
+        color: white;
+        padding: 0.6rem 1.4rem;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .nav {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        gap: 0.6rem;
+        z-index: 10000;
+        perspective: 800px;
+      }
+
+      .nav a {
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        color: #4a1c2a;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25),
+          inset 0 2px 4px rgba(255, 255, 255, 0.7);
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .nav a:hover {
+        transform: translateZ(12px);
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35),
+          inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      }
+
+      .nav a:active {
+        transform: translateZ(4px) scale(0.96);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Open When… 💌</h1>
+
+      <div class="cards">
+        <div
+          class="card"
+          data-msg="When you’re sad, remember that my heart is hugging yours tighter than words ever could ❤️"
+        >
+          <span>😔</span> Open when you’re sad
+        </div>
+        <div
+          class="card"
+          data-msg="If you miss me, close your eyes — I’m already there 💭"
+        >
+          <span>💭</span> Open when you miss me
+        </div>
+        <div
+          class="card"
+          data-msg="You are stronger than you think, and I’m always proud of you ✨"
+        >
+          <span>✨</span> Open when you doubt yourself
+        </div>
+        <div
+          class="card"
+          data-msg="Goodnight, Vee. You are my favorite thought before sleep 🌙"
+        >
+          <span>🌙</span> Open when you can’t sleep
+        </div>
+      </div>
+    </div>
+
+    <div class="message" id="message">
+      <div class="message-content">
+        <p id="text"></p>
+        <button onclick="closeMsg()">Close 💖</button>
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll(".nav a").forEach((link) => {
+        if (link.href === location.href) {
+          link.style.background = "linear-gradient(135deg, #ff5f8a, #ff2d6f)";
+          link.style.color = "white";
+        }
+      });
+
+      const cards = document.querySelectorAll(".card");
+      const msg = document.getElementById("message");
+      const text = document.getElementById("text");
+
+      cards.forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          card.style.transform = `rotateY(${x / 12}deg) rotateX(${-y / 12}deg)`;
+        });
+
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "rotateY(0) rotateX(0)";
+        });
+
+        card.onclick = () => {
+          text.textContent = card.dataset.msg;
+          msg.style.display = "flex";
+        };
+      });
+
+      function closeMsg() {
+        msg.style.display = "none";
+      }
+    </script>
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="open-when.html">💌 Open When…</a>
+      <a href="surprise.html">🎁 Surprise</a>
+    </nav>
+  </body>
+</html>
