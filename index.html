@@ -199,6 +199,9 @@
         top: 12px;
         left: 12px;
         z-index: 9999;
+        filter: blur(1px);
+        opacity: 0.8;
+        pointer-events: none; /* don’t block clicks */
       }
 
       .static-cupid img {
@@ -220,13 +223,16 @@
         }
       }
       .nav {
-        position: fixed;
-        top: 16px;
-        right: 16px;
+        position: sticky;
+        top: 0;
         display: flex;
+        justify-content: center;
         gap: 0.6rem;
-        z-index: 10000;
+        z-index: 100;
         perspective: 800px;
+        padding: 0.8rem 0;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
       }
 
       .nav a {
@@ -256,6 +262,12 @@
   </head>
 
   <body>
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="open-when.html">💌 Open When…</a>
+      <a href="surprise.html">🎁 Surprise</a>
+    </nav>
+
     <div class="static-cupid">
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc2jkta21UvnqOQ3GFPw4WfCiU22WhQ1GkFA&s"
@@ -441,10 +453,5 @@
         img.onerror = () => img.remove();
       });
     </script>
-    <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="open-when.html">💌 Open When…</a>
-      <a href="surprise.html">🎁 Surprise</a>
-    </nav>
   </body>
 </html>
