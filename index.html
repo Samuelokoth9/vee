@@ -95,7 +95,11 @@
         background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
       }
 
-      /* Gallery */
+      button:focus-visible {
+        outline: 3px solid #ff5f8a;
+        outline-offset: 3px;
+      }
+
       .gallery h2 {
         margin-bottom: 1rem;
       }
@@ -114,7 +118,6 @@
         box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
       }
 
-      /* Love scale */
       .scale-wrap {
         margin-top: 1rem;
       }
@@ -153,15 +156,12 @@
         font-size: 0.85rem;
       }
 
-      /* Rising hearts */
       .heart-rise {
         position: fixed;
         bottom: -40px;
-        font-size: 1.8rem;
         pointer-events: none;
         z-index: 1;
         animation: rise3d 6s linear forwards;
-        filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.3));
       }
 
       @keyframes rise3d {
@@ -178,27 +178,20 @@
         }
       }
 
-      /* Fireworks */
       .spark {
         position: fixed;
-        font-size: 1rem;
         pointer-events: none;
         z-index: 1;
         animation: burst 0.9s ease-out forwards;
       }
 
       @keyframes burst {
-        from {
-          transform: translate(0, 0) scale(1);
-          opacity: 1;
-        }
         to {
           transform: translate(var(--x), var(--y)) scale(0.2);
           opacity: 0;
         }
       }
 
-      /* Static Cupid */
       .static-cupid {
         position: fixed;
         top: 12px;
@@ -209,47 +202,25 @@
       .static-cupid img {
         width: 90px;
         border-radius: 16px;
-        filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
       }
 
       .love-burst {
         position: fixed;
         pointer-events: none;
         z-index: 9999;
-        font-size: 1.1rem;
         animation: loveBurst 1.2s ease-out forwards;
       }
 
       @keyframes loveBurst {
-        from {
-          transform: translate(0, 0) scale(1);
-          opacity: 1;
-        }
         to {
           transform: translate(var(--x), var(--y)) scale(0.2);
           opacity: 0;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .static-cupid img {
-          width: 65px;
-        }
-        h1 {
-          font-size: 1.8rem;
-        }
-        .photos img {
-          height: 120px;
-        }
-        .heart-rise {
-          animation-duration: 8s;
         }
       }
     </style>
   </head>
 
   <body>
-    <!-- Static Cupid Image -->
     <div class="static-cupid">
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc2jkta21UvnqOQ3GFPw4WfCiU22WhQ1GkFA&s"
@@ -272,9 +243,9 @@
           <button id="changeBtn">Sweet line 💌</button>
           <button id="musicBtn" class="secondary">Play song 🎶</button>
         </div>
-        <!-- Hidden Indila audio -->
+
         <audio id="indilaSong">
-          <source src="Song.Mp3" type="audio/mpeg" />
+          <source src="song.mp3" type="audio/mpeg" />
         </audio>
       </div>
 
@@ -294,8 +265,8 @@
 
         <div class="scale-wrap">
           <div class="scale">
-            <div id="youW" class="weight you" style="height: 40px">0 kg</div>
-            <div id="veeW" class="weight vee" style="height: 80px">15 kg</div>
+            <div id="youW" class="weight you">0 kg</div>
+            <div id="veeW" class="weight vee">15 kg</div>
           </div>
           <div class="labels"><span>Sam</span><span>Vee</span></div>
         </div>
@@ -324,33 +295,33 @@
       const musicBtn = document.getElementById("musicBtn");
       let playing = false;
 
-      musicBtn.onclick = () => {
-        if (!playing) {
-          indila.play();
-          musicBtn.textContent = "Pause song ⏸️";
-        } else {
-          indila.pause();
-          musicBtn.textContent = "Play song 🎶";
+      musicBtn.onclick = async () => {
+        try {
+          if (!playing) {
+            await indila.play();
+            musicBtn.textContent = "Pause song ⏸️";
+          } else {
+            indila.pause();
+            musicBtn.textContent = "Play song 🎶";
+          }
+          playing = !playing;
+        } catch {
+          alert("Tap again to allow music 🎶");
         }
-        playing = !playing;
       };
 
       function spawnHeart() {
         const h = document.createElement("div");
         h.className = "heart-rise";
         h.textContent = "❤️";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.fontSize = Math.random() * 22 + 14 + "px";
+        h.style.left = Math.random() * 90 + 5 + "vw";
         document.body.appendChild(h);
         h.addEventListener("animationend", () => h.remove());
       }
 
-      setInterval(spawnHeart, 1000);
-
       function firework() {
-        const x = Math.random() * window.innerWidth;
+        const x = Math.random() * innerWidth;
         const y = 80 + Math.random() * 120;
-
         for (let i = 0; i < 18; i++) {
           const s = document.createElement("div");
           s.className = "spark";
@@ -364,19 +335,52 @@
         }
       }
 
-      setInterval(firework, 7000);
+      function cupidLoveExplosion() {
+        const symbols = ["💖", "❤️", "✨", "💕"];
+        for (let i = 0; i < 14; i++) {
+          const l = document.createElement("div");
+          l.className = "love-burst";
+          l.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          l.style.left = "70px";
+          l.style.top = "70px";
+          l.style.setProperty("--x", Math.random() * 140 - 70 + "px");
+          l.style.setProperty("--y", Math.random() * 140 - 70 + "px");
+          document.body.appendChild(l);
+          setTimeout(() => l.remove(), 1200);
+        }
+      }
+
+      let intervals = [];
+
+      function startEffects() {
+        intervals.push(setInterval(spawnHeart, 1000));
+        intervals.push(setInterval(firework, 7000));
+        intervals.push(setInterval(cupidLoveExplosion, 4000));
+      }
+
+      function stopEffects() {
+        intervals.forEach(clearInterval);
+        intervals = [];
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        document.hidden ? stopEffects() : startEffects();
+      });
+
+      startEffects();
 
       let you = 0;
       let vee = 15 + Math.floor(Math.random() * 10);
       const youW = document.getElementById("youW");
       const veeW = document.getElementById("veeW");
       const result = document.getElementById("result");
+      const MAX_HEIGHT = 180;
 
       function updateW() {
         youW.textContent = you + " kg";
         veeW.textContent = vee + " kg";
-        youW.style.height = you * 3 + 40 + "px";
-        veeW.style.height = vee * 3 + 40 + "px";
+        youW.style.height = Math.min(you * 3 + 40, MAX_HEIGHT) + "px";
+        veeW.style.height = Math.min(vee * 3 + 40, MAX_HEIGHT) + "px";
       }
 
       updateW();
@@ -391,25 +395,9 @@
         spawnHeart();
       };
 
-      function cupidLoveExplosion() {
-        const baseX = 70;
-        const baseY = 70;
-        const symbols = ["💖", "❤️", "✨", "💕"];
-
-        for (let i = 0; i < 14; i++) {
-          const l = document.createElement("div");
-          l.className = "love-burst";
-          l.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-          l.style.left = baseX + "px";
-          l.style.top = baseY + "px";
-          l.style.setProperty("--x", Math.random() * 140 - 70 + "px");
-          l.style.setProperty("--y", Math.random() * 140 - 70 + "px");
-          document.body.appendChild(l);
-          setTimeout(() => l.remove(), 1200);
-        }
-      }
-
-      setInterval(cupidLoveExplosion, 4000);
+      document.querySelectorAll("img").forEach((img) => {
+        img.onerror = () => img.remove();
+      });
     </script>
   </body>
 </html>
