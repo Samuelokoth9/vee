@@ -8,11 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600;1,700&family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
 
     <style>
       * {
@@ -20,76 +20,60 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
-        font-family: "Poppins", sans-serif;
+        margin: 0;
+        font-family: Poppins, sans-serif;
         min-height: 100vh;
-        background: radial-gradient(circle at top, #ffd1dc, #ff9a9e, #fad0c4);
-        color: #4a1c2a;
+        background: linear-gradient(180deg, #ffb6c1, #ffe4ec);
+        color: #c6aab4;
         overflow-x: hidden;
         padding: 1rem;
       }
-
-      /* NAV */
-      .nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        display: flex;
-        justify-content: center;
-        gap: 0.6rem;
-        padding: 0.8rem 0;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(8px);
-      }
-      .nav a {
-        text-decoration: none;
-        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
-        padding: 0.45rem 0.9rem;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        color: #4a1c2a;
-      }
-
-      /* LAYOUT */
       .container {
         max-width: 900px;
         margin: 0 auto;
         display: grid;
         gap: 1.5rem;
+        position: relative;
+        z-index: 2;
       }
-
-      /* CARDS */
       .card,
       .gallery,
       .jar-card {
-        background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        background: linear-gradient(135deg, #e34141, #2e121a0e);
         border-radius: 26px;
         padding: 1.6rem;
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
         text-align: center;
+        text-shadow: black;
+        backdrop-filter: blur(6px);
       }
-
-      /* TEXT */
       h1 {
-        font-family: "Playfair Display", serif;
-        font-size: 2.2rem;
+        font-family: "Dancing script", cursive;
+        font-size: 3rem;
+        color: #C2185B;
+        text-align: center;
+        margin-top: 20px;
+      }
+      p {
+        text-align: center;
+        color: #6e0f0f;
       }
       h1 span {
-        color: #e6396f;
+        color: #fc6494;
       }
-      .subtitle {
-        font-style: italic;
-      }
+      .subtitle,
       .message {
         font-family: "Playfair Display", serif;
         font-style: italic;
+      }
+      .message {
         font-size: 1.25rem;
         line-height: 1.8;
         margin-bottom: 1.2rem;
+        color: #730d26;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
       }
-
-      /* BUTTONS */
       .actions {
         display: flex;
         gap: 0.6rem;
@@ -99,17 +83,17 @@
       button {
         background: linear-gradient(135deg, #ff5f8a, #ff2d6f);
         border: none;
-        color: #fff;
+        color: #b81f1f;
         padding: 0.7rem 1.4rem;
         border-radius: 999px;
         font-size: 0.9rem;
         cursor: pointer;
+        box-shadow: 0 10px 22px rgba(255, 45, 111, 0.45),
+          inset 0 2px 4px rgba(255, 255, 255, 0.4);
       }
       button.secondary {
-        background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
+        background: linear-gradient(135deg, #1664b2, #e0c3fc);
       }
-
-      /* GALLERY */
       .photos {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -120,28 +104,128 @@
         height: 150px;
         object-fit: cover;
         border-radius: 18px;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
       }
 
-      /* PHYSICS JAR */
-      .jar-wrap {
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
         display: flex;
         justify-content: center;
-        margin: 1rem 0;
+        gap: 0.6rem;
+        padding: 10px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9)
+        backdrop-filter: blur(8px);
       }
-      #jarCanvas {
-        width: 280px;
-        height: 360px;
-        border-radius: 36px 36px 24px 24px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.65),
-          rgba(255, 255, 255, 0.1)
-        );
-        border: 3px solid rgba(255, 255, 255, 0.6);
+      .nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #a25971, #ffe4ec);
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 1.3rem;
+        font-family: "dancing script", cursive;
+        color: ##e91e63;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
       }
-      .jar-glow {
-        box-shadow: 0 0 40px rgba(255, 80, 140, 0.9),
-          inset 0 0 30px rgba(255, 255, 255, 0.6);
+
+      .heart-rise {
+        position: fixed;
+        font-size: 20px;
+        animation: floatup 12s linear infinite;
+        opacity: 40.4;
+        bottom: -40px;
+        pointer-events: none;
+        z-index: 1;
+        animation: rise3d 6s linear forwards;
+      }
+      @keyframes rise3d {
+        from {transform: translateY(10vh);}
+        to {
+          transform: translateY(-120vh) scale(1.3);
+          opacity: 0;
+        }
+      }
+      .spark {
+        position: fixed;
+        pointer-events: none;
+        z-index: 1;
+        animation: burst 0.9s ease-out forwards;
+      }
+      @keyframes burst {
+        to {
+          transform: translate(var(--x), var(--y)) scale(0.2);
+          opacity: 0;
+        }
+      }
+      .static-cupid {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 9999;
+        opacity: 0.8;
+        pointer-events: none;
+      }
+      .static-cupid img {
+        width: 90px;
+        border-radius: 16px;
+      }
+      .love-burst {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        animation: loveBurst 1.2s ease-out forwards;
+      }
+      @keyframes loveBurst {
+        to {
+          transform: translate(var(--x), var(--y)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* ===== PHYSICS JAR (ADDED CLEANLY) ===== */
+      .jar-wrap {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        overflow: hidden;
+      }
+      #jarCanvas {width: 270px; height: 320px;
+      margin: 20px auto;
+      border: 4px solid #fff;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: block;
+      }
+       #jarStatus {
+      margin-top: 15px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #C2185B;
+      text-align: center;
+       }
+      .emoji-heart {
+        position: absolute;
+        font-size: 22px;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+      }
+      .jar-spell {
+        animation: pulseGlow 1.4s infinite alternate;
+      }
+      @keyframes pulseGlow {
+        from {
+          box-shadow: 0 0 25px rgba(255, 80, 140, 0.6);
+        }
+        to {
+          box-shadow: 0 0 50px rgba(255, 80, 140, 1);
+        }
       }
     </style>
   </head>
@@ -153,9 +237,11 @@
       <a href="surprise.html">🎁 Surprise</a>
     </nav>
 
-    <audio id="bgMusic">
-      <source src="Song.Mp3" type="audio/mpeg" />
-    </audio>
+    <div class="static-cupid">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc2jkta21UvnqOQ3GFPw4WfCiU22WhQ1GkFA&s"
+      />
+    </div>
 
     <div class="container">
       <!-- MAIN CARD -->
@@ -171,40 +257,37 @@
           <button id="changeBtn">Sweet line 💌</button>
           <button id="musicBtn" class="secondary">Play song 🎶</button>
         </div>
+        <audio id="indilaSong"><source src="Song.Mp3" /></audio>
       </div>
 
       <!-- GALLERY -->
       <div class="gallery">
         <h2>Her Beautiful Moments 📸</h2>
         <div class="photos">
-          <img src="Apic.jpg" />
-          <img src="Photo2.jpg" />
-          <img src="Photo3.jpg" />
-          <img src="Photo4.jpg" />
+          <img src="Apic.jpg" /><img src="Photo2.jpg" /><img
+            src="Photo3.jpg"
+          /><img src="Photo4.jpg" />
         </div>
       </div>
 
       <!-- PHYSICS LOVE JAR -->
       <div class="jar-card">
         <h2>Physics Love Jar 💖</h2>
-        <p>Drop hearts and watch love stack endlessly.</p>
-
+        <p>Fill the jar until love spells its name…</p>
         <div class="jar-wrap">
           <canvas id="jarCanvas"></canvas>
         </div>
-
         <div class="actions">
           <button id="sendLove">Send Love 💌</button>
           <button id="autoLove" class="secondary">Auto Love ❤️</button>
           <button id="clearJar" class="secondary">Clear Jar 🔄</button>
         </div>
-
         <p id="jarMsg"></p>
       </div>
     </div>
 
     <script>
-      /* MESSAGES */
+      /* ===== ORIGINAL EFFECT LOGIC (UNCHANGED) ===== */
       const messages = [
         "You are my today, my tomorrow, and my forever, Vee.",
         "Every heartbeat whispers your name, Vee.",
@@ -212,25 +295,39 @@
         "Loving you is my favorite habit, Vee.",
         "You turn ordinary days into magic, Vee.",
       ];
-      const msg = document.getElementById("message");
-      changeBtn.onclick = () =>
-        (msg.textContent = messages[(Math.random() * messages.length) | 0]);
-
-      /* MUSIC */
-      const music = document.getElementById("bgMusic");
-      let playing = false;
-      musicBtn.onclick = () => {
-        playing ? music.pause() : music.play();
-        musicBtn.textContent = playing ? "Play song 🎶" : "Pause song ⏸️";
-        playing = !playing;
+      changeBtn.onclick = () => {
+        message.textContent = messages[(Math.random() * messages.length) | 0];
+        spawnHeart();
       };
 
-      /* MATTER.JS LOVE JAR */
-      const { Engine, Render, Runner, Bodies, World, Events } = Matter;
+      const music = indilaSong;
+      let playing = false;
+      musicBtn.onclick = async () => {
+        try {
+          playing ? music.pause() : await music.play();
+          musicBtn.textContent = playing ? "Play song 🎶" : "Pause song ⏸️";
+          playing = !playing;
+        } catch {
+          alert("Tap again to allow music 🎶");
+        }
+      };
+
+      function spawnHeart() {
+        const h = document.createElement("div");
+        h.className = "heart-rise";
+        h.textContent = "💖";
+        h.style.left = Math.random() * 90 + 5 + "vw";
+        document.body.appendChild(h);
+        h.onanimationend = () => h.remove();
+      }
+      setInterval(spawnHeart, 1200);
+
+      /* ===== PHYSICS LOVE JAR GAME ===== */
+      const { Engine, Render, Runner, Bodies, World, Events, Body } = Matter;
       const canvas = document.getElementById("jarCanvas");
       const wrap = canvas.parentElement;
-      canvas.width = wrap.clientWidth;
-      canvas.height = wrap.clientHeight;
+      canvas.width = 280;
+      canvas.height = 360;
 
       const engine = Engine.create();
       engine.gravity.y = 1.2;
@@ -245,33 +342,36 @@
           background: "transparent",
         },
       });
-
-      const w = canvas.width,
-        h = canvas.height,
-        t = 20;
       World.add(engine.world, [
-        Bodies.rectangle(w / 2, h + 10, w, t, { isStatic: true }),
-        Bodies.rectangle(10, h / 2, t, h, { isStatic: true, angle: 0.05 }),
-        Bodies.rectangle(w - 10, h / 2, t, h, { isStatic: true, angle: -0.05 }),
+        Bodies.rectangle(140, 370, 280, 20, { isStatic: true }),
+        Bodies.rectangle(10, 180, 20, 360, { isStatic: true, angle: 0.05 }),
+        Bodies.rectangle(270, 180, 20, 360, { isStatic: true, angle: -0.05 }),
       ]);
-
       Render.run(render);
       Runner.run(Runner.create(), engine);
 
-      let hearts = [],
-        auto = null;
+      const hearts = [];
+      const MAX_HEARTS = 120;
+      let auto = null,
+        spelled = false;
+
+      function createEmoji() {
+        const e = document.createElement("div");
+        e.className = "emoji-heart";
+        e.textContent = ["❤️", "💖", "💕"][(Math.random() * 3) | 0];
+        wrap.appendChild(e);
+        return e;
+      }
+
       function dropHeart() {
-        const heart = Bodies.circle(
-          w / 2 + (Math.random() * 40 - 20),
-          -20,
-          10,
-          {
-            restitution: 0.6,
-            render: { fillStyle: "#ff5f8a" },
-          }
-        );
-        hearts.push(heart);
-        World.add(engine.world, heart);
+        if (hearts.length >= MAX_HEARTS) return;
+        const body = Bodies.circle(140 + (Math.random() * 40 - 20), -20, 10, {
+          restitution: 0.6,
+          friction: 0.3,
+        });
+        const emoji = createEmoji();
+        hearts.push({ body, emoji });
+        World.add(engine.world, body);
       }
 
       sendLove.onclick = () => {
@@ -284,16 +384,57 @@
         autoLove.textContent = auto ? "Stop Auto" : "Auto Love ❤️";
       };
       clearJar.onclick = () => {
-        hearts.forEach((h) => World.remove(engine.world, h));
-        hearts = [];
+        hearts.forEach((h) => {
+          World.remove(engine.world, h.body);
+          h.emoji.remove();
+        });
+        hearts.length = 0;
+        spelled = false;
         jarMsg.textContent = "";
-        canvas.classList.remove("jar-glow");
+        canvas.classList.remove("jar-spell");
       };
 
       Events.on(engine, "afterUpdate", () => {
-        if (hearts.filter((h) => h.position.y < 60).length > 6) {
-          canvas.classList.add("jar-glow");
-          jarMsg.textContent = "Our love is overflowing, Vee 💞";
+        hearts.forEach((h) => {
+          h.emoji.style.left = h.body.position.x + "px";
+          h.emoji.style.top = h.body.position.y + "px";
+        });
+
+        if (!spelled && hearts.length >= 22) {
+          spelled = true;
+          if (auto) {
+            clearInterval(auto);
+            auto = null;
+            autoLove.textContent = "Auto Love ❤️";
+          }
+          canvas.classList.add("jar-spell");
+          jarMsg.textContent = "VEE 💖 — our love has a name";
+
+          const pos = [
+            { x: 60, y: 120 },
+            { x: 70, y: 150 },
+            { x: 80, y: 180 },
+            { x: 90, y: 210 },
+            { x: 100, y: 180 },
+            { x: 110, y: 150 },
+            { x: 140, y: 120 },
+            { x: 160, y: 120 },
+            { x: 140, y: 160 },
+            { x: 160, y: 160 },
+            { x: 140, y: 200 },
+            { x: 160, y: 200 },
+            { x: 190, y: 120 },
+            { x: 210, y: 120 },
+            { x: 190, y: 160 },
+            { x: 210, y: 160 },
+            { x: 190, y: 200 },
+            { x: 210, y: 200 },
+          ];
+          hearts.slice(0, pos.length).forEach((h, i) => {
+            Body.setPosition(h.body, pos[i]);
+            Body.setVelocity(h.body, { x: 0, y: 0 });
+            Body.setStatic(h.body, true);
+          });
         }
       });
     </script>
