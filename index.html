@@ -331,9 +331,20 @@
       });
 
       World.add(engine.world, [
-        Bodies.rectangle(140, 370, 280, 20, { isStatic: true }),
-        Bodies.rectangle(10, 180, 20, 360, { isStatic: true, angle: 0.05 }),
-        Bodies.rectangle(270, 180, 20, 360, { isStatic: true, angle: -0.05 }),
+        Bodies.rectangle(140, 370, 280, 20, {
+          isStatic: true,
+          render: { visible: false },
+        }),
+        Bodies.rectangle(10, 180, 20, 360, {
+          isStatic: true,
+          angle: 0.05,
+          render: { visible: false },
+        }),
+        Bodies.rectangle(270, 180, 20, 360, {
+          isStatic: true,
+          angle: -0.05,
+          render: { visible: false },
+        }),
       ]);
 
       Render.run(render);
@@ -364,11 +375,16 @@
         for (let i = 0; i < 5; i++) setTimeout(dropHeart, i * 120);
       };
       autoLove.onclick = () => {
-        auto
-          ? clearInterval(auto)
-          : (auto = setInterval(sendLove.onclick, 1200));
-        autoLove.textContent = auto ? "Stop Auto" : "Auto Love ❤️";
+        if (auto) {
+          clearInterval(auto);
+          auto = null;
+          autoLove.textContent = "Auto Love ❤️";
+        } else {
+          auto = setInterval(sendLove.onclick, 1200);
+          autoLove.textContent = "Stop Auto";
+        }
       };
+
       clearJar.onclick = () => {
         hearts.forEach((h) => {
           World.remove(engine.world, h.body);
