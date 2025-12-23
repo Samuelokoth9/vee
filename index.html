@@ -21,17 +21,15 @@
         box-sizing: border-box;
       }
       body {
-        margin: 0;
         font-family: Poppins, sans-serif;
         min-height: 100vh;
         background: linear-gradient(180deg, #ffb6c1, #ffe4ec);
-        color: #c6aab4;
-        overflow-x: hidden;
         padding: 1rem;
+        overflow-x: hidden;
       }
       .container {
         max-width: 900px;
-        margin: 0 auto;
+        margin: auto;
         display: grid;
         gap: 1.5rem;
         position: relative;
@@ -40,39 +38,29 @@
       .card,
       .gallery,
       .jar-card {
-        background: linear-gradient(135deg, #e34141, #2e121a0e);
+        background: rgba(255, 255, 255, 0.55);
         border-radius: 26px;
         padding: 1.6rem;
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
         text-align: center;
-        text-shadow: black;
-        backdrop-filter: blur(6px);
       }
       h1 {
-        font-family: "Dancing script", cursive;
+        font-family: "Dancing Script", cursive;
         font-size: 3rem;
         color: #c2185b;
-        text-align: center;
-        margin-top: 20px;
-      }
-      p {
-        text-align: center;
-        color: #6e0f0f;
       }
       h1 span {
         color: #fc6494;
       }
-      .subtitle,
-      .message {
-        font-family: "Playfair Display", serif;
-        font-style: italic;
+      .subtitle {
+        color: #7a0d2b;
+        margin-bottom: 10px;
       }
       .message {
-        font-size: 1.25rem;
-        line-height: 1.8;
-        margin-bottom: 1.2rem;
+        font-size: 1.2rem;
         color: #730d26;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        margin: 15px 0;
       }
       .actions {
         display: flex;
@@ -81,19 +69,40 @@
         flex-wrap: wrap;
       }
       button {
-        background: linear-gradient(135deg, #ff5f8a, #ff2d6f);
         border: none;
-        color: #b81f1f;
+        cursor: pointer;
         padding: 0.7rem 1.4rem;
         border-radius: 999px;
         font-size: 0.9rem;
-        cursor: pointer;
-        box-shadow: 0 10px 22px rgba(255, 45, 111, 0.45),
-          inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        background: linear-gradient(135deg, #ff5f8a, #ff2d6f);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(255, 45, 111, 0.45);
       }
       button.secondary {
-        background: linear-gradient(135deg, #1664b2, #e0c3fc);
+        background: linear-gradient(135deg, #8fd3f4, #84fab0);
+        color: #222;
       }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 0.6rem;
+        z-index: 10;
+      }
+      .nav a {
+        text-decoration: none;
+        font-family: "Dancing Script", cursive;
+        font-size: 1.3rem;
+        background: linear-gradient(135deg, #a25971, #ffe4ec);
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        color: #e91e63;
+      }
+
       .photos {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -104,131 +113,101 @@
         height: 150px;
         object-fit: cover;
         border-radius: 18px;
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
       }
 
-      .nav {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        display: flex;
-        justify-content: center;
-        gap: 0.6rem;
-        padding: 10px;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.9);
-      }
-      .nav a {
-        margin: 0 15px;
-        text-decoration: none;
-        background: linear-gradient(135deg, #a25971, #ffe4ec);
-        padding: 0.45rem 0.9rem;
-        border-radius: 999px;
-        font-size: 1.3rem;
-        font-family: "dancing script", cursive;
-        color: #e91e63;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-      }
-
+      /* Floating hearts */
       .heart-rise {
         position: fixed;
-        font-size: 20px;
-        animation: floatup 12s linear infinite;
-        opacity: 40.4;
         bottom: -40px;
+        font-size: 22px;
+        opacity: 0.8;
         pointer-events: none;
+        animation: rise 6s linear forwards;
         z-index: 1;
-        animation: rise3d 6s linear forwards;
       }
-      @keyframes rise3d {
+      @keyframes rise {
         from {
-          transform: translateY(10vh);
+          transform: translateY(0);
         }
         to {
           transform: translateY(-120vh) scale(1.3);
           opacity: 0;
         }
       }
-      .spark {
-        position: fixed;
-        pointer-events: none;
-        z-index: 1;
-        animation: burst 0.9s ease-out forwards;
-      }
-      @keyframes burst {
-        to {
-          transform: translate(var(--x), var(--y)) scale(0.2);
-          opacity: 0;
-        }
-      }
+
+      /* Cupid */
       .static-cupid {
         position: fixed;
         top: 12px;
         left: 12px;
-        z-index: 9999;
-        opacity: 0.8;
+        opacity: 0.7;
         pointer-events: none;
+        z-index: 5;
       }
       .static-cupid img {
         width: 90px;
         border-radius: 16px;
       }
-      .love-burst {
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        animation: loveBurst 1.2s ease-out forwards;
-      }
-      @keyframes loveBurst {
-        to {
-          transform: translate(var(--x), var(--y)) scale(0.2);
-          opacity: 0;
-        }
-      }
 
-      /* ===== PHYSICS JAR (ADDED CLEANLY) ===== */
+      /* ===== GLASS LOVE JAR ===== */
       .jar-wrap {
         position: relative;
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-        overflow: hidden;
+        width: 280px;
+        height: 360px;
+        margin: 20px auto;
       }
       #jarCanvas {
-        width: 270px;
-        height: 320px;
-        margin: 20px auto;
-        border: 4px solid #fff;
-        border-radius: 25px;
-        background: rgba(255, 255, 255, 0.9);
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 40px;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8),
+          inset 0 0 60px rgba(255, 182, 193, 0.6),
+          0 15px 40px rgba(0, 0, 0, 0.25);
       }
-      #jarStatus {
-        margin-top: 15px;
+      .jar-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.6);
+        box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8);
+        pointer-events: none;
+      }
+      .jar-wrap::after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        width: 60px;
+        height: 120px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.8),
+          transparent
+        );
+        border-radius: 30px;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .emoji-heart {
+        position: absolute;
+        font-size: 20px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      #jarMsg {
+        margin-top: 12px;
         font-family: "Dancing Script", cursive;
         font-size: 1.4rem;
         color: #c2185b;
-        text-align: center;
-      }
-      .emoji-heart {
-        position: absolute;
-        font-size: 22px;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
       }
       .jar-spell {
-        animation: pulseGlow 1.4s infinite alternate;
-      }
-      @keyframes pulseGlow {
-        from {
-          box-shadow: 0 0 25px rgba(255, 80, 140, 0.6);
-        }
-        to {
-          box-shadow: 0 0 50px rgba(255, 80, 140, 1);
-        }
+        box-shadow: 0 0 35px rgba(255, 80, 140, 0.9),
+          inset 0 0 40px rgba(255, 255, 255, 0.9);
       }
     </style>
   </head>
@@ -247,7 +226,6 @@
     </div>
 
     <div class="container">
-      <!-- MAIN CARD -->
       <div class="card">
         <h1>For <span>Vee</span> ❤️</h1>
         <p class="subtitle">
@@ -260,23 +238,22 @@
           <button id="changeBtn">Sweet line 💌</button>
           <button id="musicBtn" class="secondary">Play song 🎶</button>
         </div>
-        <audio id="indilaSong"><source src="Song.Mp3" /></audio>
+        <audio id="indilaSong" src="Song.mp3"></audio>
       </div>
 
-      <!-- GALLERY -->
       <div class="gallery">
         <h2>Her Beautiful Moments 📸</h2>
         <div class="photos">
-          <img src="Apic.jpg" /><img src="Photo2.jpg" /><img
-            src="Photo3.jpg"
-          /><img src="Photo4.jpg" />
+          <img src="Apic.jpg" />
+          <img src="Photo2.jpg" />
+          <img src="Photo3.jpg" />
+          <img src="Photo4.jpg" />
         </div>
       </div>
 
-      <!-- PHYSICS LOVE JAR -->
       <div class="jar-card">
         <h2>Physics Love Jar 💖</h2>
-        <p>Fill the jar until love spells its name…</p>
+        <p>Drop hearts and watch real love stack.</p>
         <div class="jar-wrap">
           <canvas id="jarCanvas"></canvas>
         </div>
@@ -290,7 +267,15 @@
     </div>
 
     <script>
-      /* ===== ORIGINAL EFFECT LOGIC (UNCHANGED) ===== */
+      const changeBtn = document.getElementById("changeBtn");
+      const message = document.getElementById("message");
+      const musicBtn = document.getElementById("musicBtn");
+      const indilaSong = document.getElementById("indilaSong");
+      const sendLove = document.getElementById("sendLove");
+      const autoLove = document.getElementById("autoLove");
+      const clearJar = document.getElementById("clearJar");
+      const jarMsg = document.getElementById("jarMsg");
+
       const messages = [
         "You are my today, my tomorrow, and my forever, Vee.",
         "Every heartbeat whispers your name, Vee.",
@@ -298,16 +283,17 @@
         "Loving you is my favorite habit, Vee.",
         "You turn ordinary days into magic, Vee.",
       ];
+
       changeBtn.onclick = () => {
-        message.textContent = messages[(Math.random() * messages.length) | 0];
+        message.textContent =
+          messages[Math.floor(Math.random() * messages.length)];
         spawnHeart();
       };
 
-      const music = indilaSong;
       let playing = false;
       musicBtn.onclick = async () => {
         try {
-          playing ? music.pause() : await music.play();
+          playing ? indilaSong.pause() : await indilaSong.play();
           musicBtn.textContent = playing ? "Play song 🎶" : "Pause song ⏸️";
           playing = !playing;
         } catch {
@@ -319,16 +305,15 @@
         const h = document.createElement("div");
         h.className = "heart-rise";
         h.textContent = "💖";
-        h.style.left = Math.random() * 90 + 5 + "vw";
+        h.style.left = Math.random() * 80 + 10 + "vw";
         document.body.appendChild(h);
         h.onanimationend = () => h.remove();
       }
       setInterval(spawnHeart, 1200);
 
-      /* ===== PHYSICS LOVE JAR GAME ===== */
-      const { Engine, Render, Runner, Bodies, World, Events, Body } = Matter;
+      /* ===== Physics Jar ===== */
+      const { Engine, Render, Runner, Bodies, World, Events } = Matter;
       const canvas = document.getElementById("jarCanvas");
-      const wrap = canvas.parentElement;
       canvas.width = 280;
       canvas.height = 360;
 
@@ -339,38 +324,37 @@
         canvas,
         engine,
         options: {
-          width: canvas.width,
-          height: canvas.height,
+          width: 280,
+          height: 360,
           wireframes: false,
           background: "transparent",
         },
       });
+
       World.add(engine.world, [
         Bodies.rectangle(140, 370, 280, 20, { isStatic: true }),
         Bodies.rectangle(10, 180, 20, 360, { isStatic: true, angle: 0.05 }),
         Bodies.rectangle(270, 180, 20, 360, { isStatic: true, angle: -0.05 }),
       ]);
+
       Render.run(render);
       Runner.run(Runner.create(), engine);
 
       const hearts = [];
-      const MAX_HEARTS = 120;
       let auto = null,
         spelled = false;
 
       function createEmoji() {
         const e = document.createElement("div");
         e.className = "emoji-heart";
-        e.textContent = ["❤️", "💖", "💕"][(Math.random() * 3) | 0];
-        wrap.appendChild(e);
+        e.textContent = ["❤️", "💖", "💕"][Math.floor(Math.random() * 3)];
+        canvas.parentElement.appendChild(e);
         return e;
       }
 
       function dropHeart() {
-        if (hearts.length >= MAX_HEARTS) return;
         const body = Bodies.circle(140 + (Math.random() * 40 - 20), -20, 10, {
           restitution: 0.6,
-          friction: 0.3,
         });
         const emoji = createEmoji();
         hearts.push({ body, emoji });
@@ -402,42 +386,10 @@
           h.emoji.style.left = h.body.position.x + "px";
           h.emoji.style.top = h.body.position.y + "px";
         });
-
-        if (!spelled && hearts.length >= 22) {
+        if (!spelled && hearts.length >= 25) {
           spelled = true;
-          if (auto) {
-            clearInterval(auto);
-            auto = null;
-            autoLove.textContent = "Auto Love ❤️";
-          }
-          canvas.classList.add("jar-spell");
           jarMsg.textContent = "VEE 💖 — our love has a name";
-
-          const pos = [
-            { x: 60, y: 120 },
-            { x: 70, y: 150 },
-            { x: 80, y: 180 },
-            { x: 90, y: 210 },
-            { x: 100, y: 180 },
-            { x: 110, y: 150 },
-            { x: 140, y: 120 },
-            { x: 160, y: 120 },
-            { x: 140, y: 160 },
-            { x: 160, y: 160 },
-            { x: 140, y: 200 },
-            { x: 160, y: 200 },
-            { x: 190, y: 120 },
-            { x: 210, y: 120 },
-            { x: 190, y: 160 },
-            { x: 210, y: 160 },
-            { x: 190, y: 200 },
-            { x: 210, y: 200 },
-          ];
-          hearts.slice(0, pos.length).forEach((h, i) => {
-            Body.setPosition(h.body, pos[i]);
-            Body.setVelocity(h.body, { x: 0, y: 0 });
-            Body.setStatic(h.body, true);
-          });
+          canvas.classList.add("jar-spell");
         }
       });
     </script>
