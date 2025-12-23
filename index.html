@@ -15,6 +15,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
 
     <style>
+      .fade-out {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .fade-in {
+        animation: fadeInScroll 1.2s ease forwards;
+      }
+
+      @keyframes fadeInScroll {
+        from {
+          opacity: 0;
+          transform: scale(0.85);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -252,10 +273,24 @@
 
       <div class="jar-card">
         <h2>Love Jar 💖</h2>
-        <p>Drop hearts and watch real love stack.</p>
+        <p>Fill the jar with love for a sweet line of art 💖</p>
         <div class="jar-wrap">
           <canvas id="jarCanvas"></canvas>
         </div>
+        <!-- Ancient Scroll Reveal -->
+        <div id="scrollReveal" style="display: none">
+          <img
+            src="scroll.png"
+            alt="Love Scroll"
+            style="
+              width: 100%;
+              max-width: 420px;
+              border-radius: 18px;
+              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            "
+          />
+        </div>
+
         <div class="actions">
           <button id="sendLove">Send Love 💌</button>
           <button id="autoLove" class="secondary">Auto Love ❤️</button>
@@ -282,7 +317,7 @@
         "Loving you is my favorite habit, Vee.",
         "You turn ordinary days into magic, Vee.",
       ];
-
+const JAR_LIMIT = 280; // ❤️ REQUIRED HEARTS
       changeBtn.onclick = () => {
         message.textContent =
           messages[Math.floor(Math.random() * messages.length)];
@@ -395,16 +430,30 @@
         jarMsg.textContent = "";
         canvas.classList.remove("jar-spell");
       };
+      function revealScroll() {
+        const jarWrap = document.querySelector(".jar-wrap");
+        const scroll = document.getElementById("scrollReveal");
+
+        jarWrap.classList.add("fade-out");
+
+        setTimeout(() => {
+          jarWrap.style.display = "none";
+          scroll.style.display = "block";
+          scroll.classList.add("fade-in");
+        }, 1000);
+      }
 
       Events.on(engine, "afterUpdate", () => {
         hearts.forEach((h) => {
           h.emoji.style.left = h.body.position.x + "px";
           h.emoji.style.top = h.body.position.y + "px";
         });
-        if (!spelled && hearts.length >= 25) {
+        if (!spelled && hearts.length >= JAR_LIMIT) {
           spelled = true;
-          jarMsg.textContent = "VEE 💖 — our love has a name";
+          jarMsg.textContent = "You filled it with love...this is for you😍😍";
           canvas.classList.add("jar-spell");
+
+          setTimeout(revealScroll, 1500); // 💫 reveal scroll
         }
       });
     </script>
